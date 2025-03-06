@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тюльпан для тебя</title>
+    <style>
+        *,
+        *::after,
+        *::before {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-color: #000;
+            --tulip-pink: #ff69b4;
+            --tulip-white: #fff;
+            --leaf-green: #2d8c3c;
+            --stem-green: #3fa34d;
+        }
+
+        body {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--dark-color);
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .night {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            filter: blur(0.1vmin);
+            background-image: 
+                radial-gradient(ellipse at top, transparent 0%, var(--dark-color)),
+                radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2));
+        }
+
+        .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 2rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+        .title span {
+            display: inline-block;
+            margin: 0 0.1em;
+        }
+
+        .flowers {
+            position: relative;
+            transform: scale(0.9);
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 10vmin;
+            transform-origin: bottom center;
+            z-index: 10;
+            --fl-speed: 0.8s;
+        }
+
+        .flower--1 {
+            animation: moving-flower 4s linear infinite;
+        }
+
+        .flower__leafs {
+            position: relative;
+            animation: blooming-flower 2s backwards;
+            animation-delay: 1.1s;
+        }
+
+        .flower__leaf {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 14vmin;
+            height: 20vmin;
+            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+            background-image: linear-gradient(to right, var(--tulip-pink) 30%, var(--tulip-white));
+            transform-origin: bottom center;
+            opacity: 0.95;
+            box-shadow: 
+                inset 0 0 2vmin rgba(255, 255, 255, 0.5),
+                0 0 1vmin rgba(255, 105, 180, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .flower__leaf--1 { 
+            transform: translate(-85%, 1%) rotateY(30deg) rotateX(-20deg);
+            background-image: linear-gradient(to right, var(--tulip-pink) 40%, var(--tulip-white));
+        }
+
+        .flower__leaf--2 { 
+            transform: translate(-50%, -2%) rotateX(20deg);
+            background-image: linear-gradient(to left, var(--tulip-pink) 40%, var(--tulip-white));
+            height: 22vmin;
+        }
+
+        .flower__leaf--3 { 
+            transform: translate(-15%, 1%) rotateY(-30deg) rotateX(-20deg);
+            background-image: linear-gradient(to left, var(--tulip-pink) 40%, var(--tulip-white));
+        }
+
+        .flower__line {
+            height: 45vmin;
+            width: 1.5vmin;
+            background-image: linear-gradient(to top, transparent 10%, var(--leaf-green), var(--stem-green));
+            box-shadow: 
+                inset 0 0 2px rgba(0, 0, 0, 0.5),
+                0 0 1vmin rgba(45, 140, 60, 0.2);
+            animation: grow-flower-tree 4s backwards;
+        }
+
+        .flower__line__leaf {
+            position: absolute;
+            width: 12vmin;
+            height: 4vmin;
+            background-color: var(--leaf-green);
+            border-radius: 0 50% 0 50%;
+            transform-origin: 0 50%;
+            box-shadow: 
+                inset 0 0 1vmin rgba(63, 163, 77, 0.5),
+                0 0 0.5vmin rgba(45, 140, 60, 0.2);
+        }
+
+        .flower__line__leaf--1 { 
+            left: 0;
+            top: 20%;
+            transform: rotate(-20deg);
+        }
+
+        .flower__line__leaf--2 { 
+            left: -10vmin;
+            top: 45%;
+            transform: rotate(-30deg);
+        }
+
+        @keyframes moving-flower {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        @keyframes blooming-flower {
+            0% { 
+                transform: scale(0); 
+                opacity: 0;
+            }
+            100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes grow-flower-tree {
+            0% { 
+                height: 0;
+                opacity: 0;
+            }
+            100% { 
+                height: 45vmin;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="not-loaded">
+    <!-- Background -->
+    <div class="night"></div>
+
+    <!-- Flower -->
+    <div class="flowers">
+        <div class="flower flower--1">
+            <div class="flower__leafs">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+            </div>
+            <div class="flower__line">
+                <div class="flower__line__leaf flower__line__leaf--1"></div>
+                <div class="flower__line__leaf flower__line__leaf--2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="title"><span id="title"></span></h1>
+
+    <script>
+        window.onload = () => {
+            setTimeout(() => {
+                document.body.classList.remove("not-loaded");
+
+                const titles = 'Я   тебя   люблю!'.split('');  // Added extra spaces
+                const titleElement = document.getElementById('title');
+                let index = 0;
+
+                // Add cursor style
+                titleElement.style.borderRight = '0.15em solid #fff';
+                titleElement.style.animation = 'blink-caret 0.75s step-end infinite';
+
+                function appendTitle() {
+                    if (index < titles.length) {
+                        // Add fade-in effect to each character
+                        const span = document.createElement('span');
+                        span.textContent = titles[index];
+
+                        // Add proper spacing for spaces
+                        if (titles[index] === ' ') {
+                            span.style.marginRight = '0.5em';
+                        }
+
+                        span.style.opacity = '0';
+                        span.style.animation = 'fadeIn 0.5s forwards';
+                        titleElement.appendChild(span);
+
+                        index++;
+                        // Vary the typing speed slightly for more natural effect
+                        const delay = titles[index-1] === ' ' ? 100 : 200 + Math.random() * 200;
+                        setTimeout(appendTitle, delay);
+                    } else {
+                        // Remove cursor when done typing
+                        setTimeout(() => {
+                            titleElement.style.borderRight = 'none';
+                        }, 1000);
+                    }
+                }
+
+                appendTitle();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

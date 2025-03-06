@@ -224,7 +224,7 @@
             setTimeout(() => {
                 document.body.classList.remove("not-loaded");
 
-                const titles = 'Я   тебя   люблю!'.split('');  // Added extra spaces
+                const titles = 'Я тебя люблю!'.split('');  // Added extra spaces
                 const titleElement = document.getElementById('title');
                 let index = 0;
 
@@ -240,7 +240,7 @@
 
                         // Add proper spacing for spaces
                         if (titles[index] === ' ') {
-                            span.style.marginRight = '0.5em';
+                            span.style.marginRight = '0.3em';
                         }
 
                         span.style.opacity = '0';
